@@ -8,6 +8,7 @@ import UserProfile from "./pages/UserProfile";
 
 const App = () => {
   return (
+
     <div className="bg-[#1D2123] min-h-screen text-white flex gap-10">
       <SideNavbar />
 
@@ -17,6 +18,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/user-profile" element={<UserProfile />} />
       </Routes>
+
+   
     </div>
   );
 };
