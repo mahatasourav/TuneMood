@@ -1,5 +1,5 @@
 import React from "react";
-import UpperNavbar from "../components/UpperNavbar";
+
 import HeroSection from "../components/HeroSection";
 import Playlist from "../components/Playlist";
 import NewRelease from "../components/newRelease";
