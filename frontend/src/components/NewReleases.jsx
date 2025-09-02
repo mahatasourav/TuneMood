@@ -3,7 +3,7 @@ import { assets, newReleaseDummyData } from "../assets/assets";
 
 const NewRelease = () => {
   return (
-    <div className="flex flex-col w-auto">
+    <div className="flex flex-col w-auto pl-3 md:pl-0">
       <p className="mb-5 font-bold text-lg">New Releases</p>
       <div className="  w-[87vw]  flex flex-col gap-6 md:mt-2 pb-4">
         <div className="grid grid-rows-1 auto-cols-[150px] grid-flow-col  gap-y-8 gap-x-6 w-full overflow-x-auto scrollbar-hide">

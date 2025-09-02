@@ -16,7 +16,7 @@ const App = () => {
       </div>
 
       <div className="flex flex-col md:ml-28  ">
-        <div className="pl-10 sticky top-0 bg-[#1D2123] z-40 ">
+        <div className="pl-8 sticky top-0 bg-[#1D2123] z-40 ">
           <UpperNavbar />
         </div>
 
