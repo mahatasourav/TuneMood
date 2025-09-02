@@ -17,27 +17,48 @@ const SideNavbar = () => {
     <div>
       <div className=" hidden md:flex flex-col pt-32 items-center ml-2 min-w-16 -z-10  ">
         <div className=" flex flex-col gap-8 px-4 justify-center items-center ">
-          <NavLink to={"/"} className="hover:text-yellow-300">
-            <IoMdHome className="size-8" />
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? "text-yellow-300 transform scale-75 transition-all duration-200"
+                : "text-white hover:text-yellow-300 transform scale-100 transition-all duration-200"
+            }
+          >
+            <IoMdHome className="text-3xl" />
           </NavLink>
 
           {/* Favourite Playlist */}
-          <NavLink to={"/favourite-playlist"} className="hover:text-yellow-300">
-            <BiSolidPlaylist className="size-8" />
+          <NavLink
+            to={"/favourite-playlist"}
+            className={({ isActive }) =>
+              isActive
+                ? "text-yellow-300 transform scale-75 transition-all duration-200"
+                : "text-white hover:text-yellow-300 transform scale-100 transition-all duration-200"
+            }
+          >
+            <BiSolidPlaylist className="text-3xl" />
           </NavLink>
 
           {/* User-Profile */}
-          <NavLink to={"/user-profile"} className="hover:text-yellow-300">
-            <TbLogin className="size-9" />
+          <NavLink
+            to={"/user-profile"}
+            className={({ isActive }) =>
+              isActive
+                ? "text-yellow-300 transform scale-75 transition-all duration-200"
+                : "text-white hover:text-yellow-300 transform scale-100 transition-all duration-200"
+            }
+          >
+            <TbLogin className="text-3xl" />
           </NavLink>
         </div>
       </div>
 
       {/* Mobile view --> */}
-      <div className="md:hidden ">
+      <div className="md:hidden  ">
         {viewList ? (
           <button
-            className="flex justify-center text-center  ml-8 mt-8"
+            className="flex justify-center text-center  ml-8 mt-10  "
             onClick={() => setViewList(false)}
           >
             <ImCross size={32} />
@@ -51,33 +72,38 @@ const SideNavbar = () => {
           </button>
         )}
         {viewList && (
-          <div className="text-white  w-[100vw] flex flex-col min-h-screen justify-start items-center pt-40 gap-8  transition-all duration-300 ease-in-out">
-            <NavLink
-              to={"/"}
-              className="flex gap-2 hover:text-yellow-300"
-              onClick={() => setViewList(false)}
-            >
-              <IoMdHome className="size-10" /> <p className="text-3xl">Home</p>
-            </NavLink>
+          <div>
+            <p className="mt-[-140px]"></p>
+            <div className="text-white  w-[100vw] flex flex-col h-[120vh] justify-start items-center pt-60 gap-8  transition-all duration-300 ease-in-out bg-[#1D2123] ">
+              <NavLink
+                to={"/"}
+                className="flex gap-2 hover:text-yellow-300 "
+                onClick={() => setViewList(false)}
+              >
+                <IoMdHome className="size-10" />{" "}
+                <p className="text-3xl">Home</p>
+              </NavLink>
 
-            {/* Favourite Playlist */}
-            <NavLink
-              to={"/favourite-playlist"}
-              className="flex gap-2 hover:text-yellow-300"
-              onClick={() => setViewList(false)}
-            >
-              <BiSolidPlaylist className="size-10" />{" "}
-              <p className="text-3xl">PlayList</p>
-            </NavLink>
+              {/* Favourite Playlist */}
+              <NavLink
+                to={"/favourite-playlist"}
+                className="flex gap-2 hover:text-yellow-300"
+                onClick={() => setViewList(false)}
+              >
+                <BiSolidPlaylist className="size-10" />{" "}
+                <p className="text-3xl">PlayList</p>
+              </NavLink>
 
-            {/* User-Profile */}
-            <NavLink
-              to={"/user-profile"}
-              className="flex gap-2 hover:text-yellow-300"
-              onClick={() => setViewList(false)}
-            >
-              <TbLogin className="size-10" /> <p className="text-3xl">Login</p>
-            </NavLink>
+              {/* User-Profile */}
+              <NavLink
+                to={"/user-profile"}
+                className="flex gap-2 hover:text-yellow-300"
+                onClick={() => setViewList(false)}
+              >
+                <TbLogin className="size-10" />{" "}
+                <p className="text-3xl">Login</p>
+              </NavLink>
+            </div>
           </div>
         )}
       </div>
