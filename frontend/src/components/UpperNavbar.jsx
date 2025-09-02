@@ -3,7 +3,7 @@ import { assets } from "../assets/assets";
 
 const UpperNavbar = () => {
   return (
-    <div className="flex flex-row-reverse md:flex-row justify-between gap-1 max-w-[75vw] items-center  px-0 md:px-6  mt-10 md:mt-5 mb-5 max-h-[30px]">
+    <div className="flex flex-row-reverse md:flex-row justify-between gap-1 max-w-[75vw] items-center  px-0 md:px-6  mt-8 md:mt-5  mb-8 md:mb-5 max-h-[30px]">
       {/* Search Section  */}
       <div className="flex relative ">
         <div className="relative w-full max-w-sm mx-auto">
