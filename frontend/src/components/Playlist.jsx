@@ -4,7 +4,7 @@ import { assets, MoodSelectData, newReleaseDummyData } from "../assets/assets";
 const Playlist = () => {
   const [mood, setMood] = useState("");
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 pl-3 md:pl-0">
       <div className="  w-[87vw]  flex flex-col gap-6 md:mt-2 pb-4">
         <p className="text-center md:text-left md:text-xl pl-2">
           Select Playlist Accroding to your mood & activity
