@@ -4,7 +4,7 @@ import { assets, MoodSelectData, newReleaseDummyData } from "../assets/assets";
 const Playlist = () => {
   const [mood, setMood] = useState("");
   return (
-    <div>
+    <div className="flex flex-col gap-8">
       <div className="  w-[87vw]  flex flex-col gap-6 md:mt-2 pb-4">
         <p className="text-center md:text-left md:text-xl pl-2">
           Select Playlist Accroding to your mood & activity
@@ -12,14 +12,16 @@ const Playlist = () => {
 
         <div className="grid grid-rows-2 auto-cols-[140px] grid-flow-col gap-4 w-full overflow-x-auto scrollbar-hide">
           {MoodSelectData.map((item) => (
-            <div
+            <button
               key={item.id}
               onClick={() => setMood({ mood: item.mood, emoji: item.emoji })}
-              className="flex gap-1 justify-center items-center border border-gray-500 rounded-2xl py-1 hover:bg-gray-500 hover:cursor-pointer duration-300 transition-all"
+              className={`flex gap-1 justify-center items-center border border-gray-500 rounded-2xl py-1 hover:bg-gray-500 hover:cursor-pointer duration-300 transition-all ${
+                mood.mood === item.mood ? "bg-gray-500 " : ""
+              }`}
             >
               <p>{item.emoji}</p>
               <p>{item.mood}</p>
-            </div>
+            </button>
           ))}
         </div>
       </div>
@@ -33,7 +35,7 @@ const Playlist = () => {
           {newReleaseDummyData.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col gap-0.5 cursor-pointer rounded-2xl hover:bg-slate-700 pb-2 px-2 pt-1 w-full h-[200px] duration-300 transition-all "
+              className="flex flex-col gap-0.5 cursor-pointer rounded-2xl hover:bg-slate-700 pb-2 px-2 pt-1.5 w-full h-[200px] duration-300 transition-all "
             >
               <img src={item.image} alt="" className="" />
               <p>{item.title}</p>
