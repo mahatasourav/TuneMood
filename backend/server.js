@@ -3,6 +3,9 @@ import cors from "cors";
 
 import connectDB from "./config/mongodb.js";
 import dotenv from "dotenv";
+import userRouter from "./routes/userRoutes.js";
+import spotifyRouter from "./routes/spotifyRoutes.js";
+import mlModelRouter from "./routes/mlModelRoutes.js";
 // import connectCloudinary from "./config/cloudinary.js";
 
 dotenv.config();
@@ -21,6 +24,11 @@ app.use(
     credentials: true,
   })
 );
+
+// api end points
+app.use("/api/user", userRouter);
+app.use("/api/spotify", spotifyRouter);
+app.use("/api/ml", mlModelRouter);
 
 app.get("/", (req, res) => {
   res.send("api working ");
