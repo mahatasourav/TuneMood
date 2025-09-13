@@ -61,7 +61,7 @@ const Login = () => {
 
   useEffect(() => {
     if (token) {
-      navigate("/");
+      navigate("/user-profile");
     }
   }, [token]);
   return (
