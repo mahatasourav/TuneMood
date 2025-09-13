@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import home from "../assets/sidenavbar_assets/home.png";
-import menuMobile from "../assets/sidenavbar_assets/menuMobile.png";
-import playlist from "../assets/sidenavbar_assets/playlist.png";
-import profile from "../assets/sidenavbar_assets/profile.png";
+// import home from "../assets/sidenavbar_assets/home.png";
+// import menuMobile from "../assets/sidenavbar_assets/menuMobile.png";
+// import playlist from "../assets/sidenavbar_assets/playlist.png";
+// import profile from "../assets/sidenavbar_assets/profile.png";
 import { useNavigate, NavLink } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
 import { BiSolidPlaylist } from "react-icons/bi";
