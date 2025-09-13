@@ -1,11 +1,11 @@
 import express from "express";
 import cors from "cors";
-
 import connectDB from "./config/mongodb.js";
 import dotenv from "dotenv";
 import userRouter from "./routes/userRoutes.js";
 import spotifyRouter from "./routes/spotifyRoutes.js";
 import mlModelRouter from "./routes/mlModelRoutes.js";
+
 // import connectCloudinary from "./config/cloudinary.js";
 
 dotenv.config();
@@ -16,6 +16,9 @@ connectDB();
 // middlewares
 
 app.use(express.json());
+
+// Optional: parse URL-encoded bodies (for forms)
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({

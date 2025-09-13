@@ -9,6 +9,9 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const user = {
@@ -30,6 +33,14 @@ const UserProfile = () => {
     { mood: "Positive", value: 25 },
     { mood: "Adventurous", value: 35 },
   ];
+  const { token, setToken } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    setToken(false);
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <div className="flex flex-col w-full px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto">
@@ -67,7 +78,10 @@ const UserProfile = () => {
             Edit
           </button>
 
-          <button className="bg-red-700 px-6 py-2 rounded-md hover:bg-red-500">
+          <button
+            onClick={logout}
+            className="bg-red-700 px-6 py-2 rounded-md hover:bg-red-500"
+          >
             Logout
           </button>
         </div>
