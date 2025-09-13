@@ -10,9 +10,14 @@ import { TbLogin } from "react-icons/tb";
 import { FaCircleUser } from "react-icons/fa6";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCross } from "react-icons/im";
+import { FaUser } from "react-icons/fa";
+import { AppContext } from "../context/AppContext";
+import { useContext } from "react";
 
 const SideNavbar = () => {
   const [viewList, setViewList] = useState(false);
+
+  const { token, setToken } = useContext(AppContext);
   return (
     <div>
       <div className=" hidden md:flex flex-col pt-32 items-center ml-2 min-w-16 -z-10  ">
@@ -41,20 +46,34 @@ const SideNavbar = () => {
           </NavLink>
 
           {/* User-Profile */}
-          <NavLink
-            to={"/user-profile"}
-            className={({ isActive }) =>
-              isActive
-                ? "text-yellow-300 transform scale-75 transition-all duration-200"
-                : "text-white hover:text-yellow-300 transform scale-100 transition-all duration-200"
-            }
-          >
-            <TbLogin className="text-3xl" />
-          </NavLink>
+          {!token ? (
+            <NavLink
+              to={"/login"}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-300 transform scale-75 transition-all duration-200"
+                  : "text-white hover:text-yellow-300 transform scale-100 transition-all duration-200"
+              }
+            >
+              <TbLogin className="text-3xl" />
+            </NavLink>
+          ) : (
+            <NavLink
+              to={"/user-profile"}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-300 transform scale-75 transition-all duration-200"
+                  : "text-white hover:text-yellow-300 transform scale-100 transition-all duration-200"
+              }
+            >
+              <FaUser className="text-3xl" />
+            </NavLink>
+          )}
         </div>
       </div>
 
       {/* Mobile view --> */}
+
       <div className="md:hidden  ">
         {viewList ? (
           <button
@@ -95,14 +114,25 @@ const SideNavbar = () => {
               </NavLink>
 
               {/* User-Profile */}
-              <NavLink
-                to={"/user-profile"}
-                className="flex gap-2 hover:text-yellow-300"
-                onClick={() => setViewList(false)}
-              >
-                <TbLogin className="size-10" />{" "}
-                <p className="text-3xl">Login</p>
-              </NavLink>
+              {!token ? (
+                <NavLink
+                  to={"/login"}
+                  className="flex gap-2 hover:text-yellow-300"
+                  onClick={() => setViewList(false)}
+                >
+                  <TbLogin className="size-10" />{" "}
+                  <p className="text-3xl">Login</p>
+                </NavLink>
+              ) : (
+                <NavLink
+                  to={"/user-profile"}
+                  className="flex gap-2 hover:text-yellow-300"
+                  onClick={() => setViewList(false)}
+                >
+                  <FaUser className="size-10" />{" "}
+                  <p className="text-3xl">UserProfile</p>
+                </NavLink>
+              )}
             </div>
           </div>
         )}
