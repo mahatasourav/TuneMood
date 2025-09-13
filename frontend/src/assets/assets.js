@@ -12,6 +12,10 @@ import music5 from "./music5.png";
 import music6 from "./music6.png";
 import vector from "./Vector.png";
 import likesBy from "./LikesBy.png";
+import user_profile from "./user_profile.png";
+import edit_icon from "./edit-icon.png";
+import favouriteSongs_icon from "./favouriteSongs_icon.png";
+import dot_icons from "./dot_icons.png";
 
 export const assets = {
   logo,
@@ -27,6 +31,10 @@ export const assets = {
   music6,
   vector,
   likesBy,
+  user_profile,
+  edit_icon,
+  favouriteSongs_icon,
+  dot_icons
 };
 
 export const topChartDummyData = [
@@ -102,3 +110,15 @@ export const newReleaseDummyData = [
   { id: 23, title: "Cancelled", artistName: "Enimen", image: music5 },
   { id: 24, title: "Nomad", artistName: "Makrol eli", image: music6 },
 ];
+
+export const songs = [
+  { id: 1, image:topChart1, name: "Shape of You", artist: "Ed Sheeran", album: "Divide", duration: "3:53", mood: "Happy", addedOn: "Today" },
+  { id: 2, image:topChart2, name: "Blinding Lights", artist: "The Weeknd", album: "After Hours", duration: "4:02", mood: "Chill", addedOn: "2d ago" },
+  { id: 3, image:topChart1, name: "Someone Like You", artist: "Adele", album: "21", duration: "4:45", mood: "Sad", addedOn: "1w ago" },
+  { id: 4, image:topChart2, name: "Believer", artist: "Imagine Dragons", album: "Evolve", duration: "3:37", mood: "Energetic", addedOn: "3w ago" },
+  { id: 5, image:topChart1, name: "Perfect", artist: "Ed Sheeran", album: "Divide", duration: "4:23", mood: "Romantic", addedOn: "1m ago" },
+  { id: 6, image:topChart2, name: "Rolling in the Deep", artist: "Adele", album: "21", duration: "3:49", mood: "Sad", addedOn: "2m ago" },
+  { id: 7,  image:topChart1, name: "Levitating", artist: "Dua Lipa", album: "Future Nostalgia", duration: "3:23", mood: "Party", addedOn: "Today" },
+  { id: 8, image:topChart2, name: "Senorita", artist: "Shawn Mendes, Camila Cabello", album: "Single", duration: "3:11", mood: "Romantic", addedOn: "5d ago" },
+];
+
