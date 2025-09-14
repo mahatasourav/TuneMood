@@ -6,13 +6,14 @@ import userRouter from "./routes/userRoutes.js";
 import spotifyRouter from "./routes/spotifyRoutes.js";
 import mlModelRouter from "./routes/mlModelRoutes.js";
 
-// import connectCloudinary from "./config/cloudinary.js";
+import connectCloudinary from "./config/cloudinary.js";
 
 dotenv.config();
 
 const app = express();
 const port = 4000;
 connectDB();
+connectCloudinary();
 // middlewares
 
 app.use(express.json());
@@ -23,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: "*", // or restrict to your frontend Render URL
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
 );

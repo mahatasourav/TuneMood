@@ -1,5 +1,6 @@
 import React from "react";
 import { assets, newReleaseDummyData } from "../assets/assets";
+import { MdFavoriteBorder } from "react-icons/md";
 
 const NewRelease = () => {
   return (
@@ -10,11 +11,17 @@ const NewRelease = () => {
           {newReleaseDummyData.slice(4, 13).map((item) => (
             <div
               key={item.id}
-              className="flex flex-col gap-0.5 cursor-pointer rounded-2xl hover:bg-slate-700 pb-2 px-2 pt-1.5 w-full h-[200px] duration-300 transition-all "
+              className="flex flex-col justify-between gap-0.5 cursor-pointer rounded-2xl hover:bg-slate-700 pb-4 px-2 pt-1.5 w-full h-[200px] duration-300 transition-all border border-gray-800  "
             >
-              <img src={item.image} alt="" className="" />
-              <p>{item.title}</p>
-              <p className="text-xs">{item.artistName}</p>
+              <img src={item.image} alt="" className="h-32 w-30" />
+              <div className="flex  items-end justify-between ">
+                <div>
+                  {" "}
+                  <p className="text-sm">{item.title}</p>
+                  <p className="text-xs">{item.artistName}</p>
+                </div>
+                <MdFavoriteBorder className="h-6 w-8" />
+              </div>
             </div>
           ))}
         </div>
