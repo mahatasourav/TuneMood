@@ -21,7 +21,7 @@ const Login = () => {
     try {
       if (state === "signup") {
         console.log("hiii");
-        const { data } = await axios.post(backendurl + "api/user/register", {
+        const { data } = await axios.post(backendurl + "/api/user/register", {
           name,
           email,
           password,

@@ -71,7 +71,7 @@ const HeroSection = () => {
                 </div>
               </div>
 
-              <IoHeartCircleOutline className="text-2xl text-white cursor-pointer" />
+              <IoHeartCircleOutline className="text-2xl text-white cursor-pointer hover:text-red-700" />
             </div>
           ))}
         </div>

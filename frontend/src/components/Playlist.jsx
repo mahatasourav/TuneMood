@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { assets, MoodSelectData, newReleaseDummyData } from "../assets/assets";
+import { MdFavoriteBorder } from "react-icons/md";
 
 const Playlist = () => {
   const [mood, setMood] = useState("");
@@ -15,7 +16,7 @@ const Playlist = () => {
             <button
               key={item.id}
               onClick={() => setMood({ mood: item.mood, emoji: item.emoji })}
-              className={`flex gap-1 justify-center items-center border border-gray-500 rounded-2xl py-1 hover:bg-gray-500 hover:cursor-pointer duration-300 transition-all ${
+              className={`flex gap-1 justify-center items-center border border-gray-700 rounded-2xl py-1 hover:bg-gray-500 hover:cursor-pointer duration-300 transition-all ${
                 mood.mood === item.mood ? "bg-gray-500 " : ""
               }`}
             >
@@ -35,11 +36,17 @@ const Playlist = () => {
           {newReleaseDummyData.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col gap-0.5 cursor-pointer rounded-2xl hover:bg-slate-700 pb-2 px-2 pt-1.5 w-full h-[200px] duration-300 transition-all "
+              className="flex flex-col justify-between gap-0.5 cursor-pointer rounded-2xl hover:bg-slate-700 pb-4 px-2 pt-1.5 w-full h-[200px] duration-300 transition-all border border-gray-800  "
             >
-              <img src={item.image} alt="" className="" />
-              <p>{item.title}</p>
-              <p className="text-xs">{item.artistName}</p>
+              <img src={item.image} alt="" className="h-32 w-30" />
+              <div className="flex  items-end justify-between ">
+                <div>
+                  {" "}
+                  <p className="text-sm">{item.title}</p>
+                  <p className="text-xs">{item.artistName}</p>
+                </div>
+                <MdFavoriteBorder className="h-6 w-8" />
+              </div>
             </div>
           ))}
         </div>

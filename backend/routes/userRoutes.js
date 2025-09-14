@@ -1,24 +1,31 @@
 import express from "express";
-import { loginUser, registerUser } from "../controllers/userController.js"; // adjust path as needed
+import {
+  loginUser,
+  registerUser,
+  getUserProfileData,
+  updateUserProfile,
+} from "../controllers/userController.js"; // adjust path as needed
+import authUser from "../middlewares/authUser.js";
+import upload from "../middlewares/multer.js";
 
 const userRouter = express.Router();
-
-// ======================
-// User Authentication
-// ======================
 
 // Register a new user
 userRouter.post("/register", registerUser);
 
-// Login a user
+// login
 userRouter.post("/login", loginUser);
 
-// // ======================
-// // User Profile
-// // ======================
+// get user profile
+userRouter.get("/get-profile", authUser, getUserProfileData);
 
-// // Update user profile
-// userRouter.put("/update", updateProfile);
+// Update user profile
+userRouter.patch(
+  "/update-profile",
+  upload.single("imageFile"),
+  authUser,
+  updateUserProfile
+);
 
 // // ======================
 // // Favourites
