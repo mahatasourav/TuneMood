@@ -3,10 +3,39 @@ import { assets, songs } from "../assets/assets";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { HiDotsVertical } from "react-icons/hi";
 
+const userId = "6701c84fd3e7a4d5a5eabc12";
+
 const FavouritePlaylist = () => {
+  const [favourites, setFavourites] = useState([]);
+
+  // Fetch favourites
+  useEffect(() => {
+    fetch(`http://localhost:5000/api/favourites/${userId}`)
+      .then((res) => res.json())
+      .then((data) => setFavourites(data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/favourites/${id}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        setFavourites((prev) => prev.filter((fav) => fav._id !== id));
+      } else {
+        alert("Failed to delete favourite.");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const [openMenu, setOpenMenu] = useState(null);
   const menuRef = useRef(null);
 
+  // CLose dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -62,9 +91,9 @@ const FavouritePlaylist = () => {
           </thead>
 
           <tbody>
-            {songs.map((song, index) => (
+            {favourites.map((fav, index) => (
               <tr
-                key={song.id}
+                key={fav._id}
                 className="hover:bg-slate-700 transition-colors relative"
               >
                 <td className="px-4 py-2 ">{index + 1}</td>
@@ -106,7 +135,7 @@ const FavouritePlaylist = () => {
                 {/* Last Column: Delete or 3-dot Menu */}
                 <td className="px-4 py-2 text-right">
                   {/* Desktop Delete Button */}
-                  <button>
+                  <button onClick={() => handleDelete(fav._id)}>
                     <RiDeleteBin6Line className="hidden sm:inline-block hover:text-red-500" />
                   </button>
 

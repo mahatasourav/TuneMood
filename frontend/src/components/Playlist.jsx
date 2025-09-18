@@ -4,6 +4,15 @@ import { MdFavoriteBorder } from "react-icons/md";
 
 const Playlist = () => {
   const [mood, setMood] = useState("");
+const [favourites, setFavourites] = useState([]);
+
+const handleAddFavourite = async (song) => {
+  try{
+    const res = await fetch("")
+  }
+}
+
+
   return (
     <div className="flex flex-col gap-8 pl-3 md:pl-0">
       <div className="  w-[87vw]  flex flex-col gap-6 md:mt-2 pb-4">
