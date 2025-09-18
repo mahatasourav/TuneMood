@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/userRoutes.js";
 import spotifyRouter from "./routes/spotifyRoutes.js";
 import mlModelRouter from "./routes/mlModelRoutes.js";
+import favouriteRoutes from "./routes/favouriteRoutes.js";
 
 import connectCloudinary from "./config/cloudinary.js";
 
@@ -33,6 +34,7 @@ app.use(
 app.use("/api/user", userRouter);
 app.use("/api/spotify", spotifyRouter);
 app.use("/api/ml", mlModelRouter);
+app.use("/api/favourites", favouriteRoutes);
 
 app.get("/", (req, res) => {
   res.send("api working ");
