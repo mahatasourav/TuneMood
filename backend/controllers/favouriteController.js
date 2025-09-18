@@ -1,12 +1,11 @@
-import Favourite from "../models/favouriteModel.js";
+import { Favourite } from "../models/favouriteModel.js";
 
 // Add song to favourites
 export const addFavourite = async (req, res) => {
   try {
     const { songId, title, artist, mood, image } = req.body;
 
-    
-    const userId = req.body.userId; 
+    const userId = req.body.userId;
 
     // Check if already in favourites
     const exists = await Favourite.findOne({ userId, songId });
@@ -20,7 +19,7 @@ export const addFavourite = async (req, res) => {
       title,
       artist,
       mood,
-      image, 
+      image,
     });
 
     res.status(201).json(favourite);
@@ -33,7 +32,7 @@ export const addFavourite = async (req, res) => {
 // Get all favourites for a user
 export const getFavourites = async (req, res) => {
   try {
-    const userId = req.params.userId; 
+    const userId = req.params.userId;
     const favourites = await Favourite.find({ userId });
 
     res.status(200).json(favourites);
@@ -46,7 +45,7 @@ export const getFavourites = async (req, res) => {
 // Delete favourite song
 export const deleteFavourite = async (req, res) => {
   try {
-    const { id } = req.params; 
+    const { id } = req.params;
     const favourite = await Favourite.findByIdAndDelete(id);
 
     if (!favourite) {

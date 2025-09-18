@@ -37,7 +37,7 @@ mlModelRouter.post("/predict", async (req, res) => {
   try {
     const { mood } = req.body || {};
     if (!mood) return res.status(400).json({ error: "Mood is required" });
-
+    console.log("call is in backend");
     const seedSong = moodSeeds[mood.toLowerCase()];
     if (!seedSong) return res.status(400).json({ error: "Invalid mood" });
 
