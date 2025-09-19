@@ -37,8 +37,8 @@ userRouter.post("/add-favourites", authUser, addFavourite);
 
 userRouter.get("/get-favourites", authUser, getFavourites);
 
-// // Remove from favourites
-// userRouter.delete("/:id/favourites/remove/:playlistId", removeFromFavourites);
+// // // Remove from favourites
+// userRouter.delete("/favourites-delete", removeFromFavourites);
 
 // // ======================
 // // Mood Chart
