@@ -9,9 +9,16 @@ import generalMusic from "../assets/generalMusic.png";
 
 const Playlist = () => {
   const [mood, setMood] = useState("");
-  const [favourites, setFavourites] = useState([]);
+
   const [songs, setSongs] = useState([]); // to store recommended songs
-  const { backendurl, token, setToken } = useContext(AppContext);
+  const {
+    backendurl,
+    token,
+    setToken,
+    favourites,
+    setFavourites,
+    addToFavourites,
+  } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
 
   const handleMoodClick = async (item) => {
@@ -22,9 +29,9 @@ const Playlist = () => {
         mood: item.mood,
       });
 
-      if (data && data.recommendations) {
-        setSongs(data.recommendations); // ✅ extract the array from recommendations
-        console.log("Recommended Songs:", data.recommendations);
+      if (data) {
+        setSongs(data); // ✅ extract the array from recommendations
+        console.log("Recommended Songs:", data);
       }
     } catch (error) {
       console.log("ML API Error:", error);
@@ -81,10 +88,16 @@ const Playlist = () => {
                 <img src={generalMusic} alt="" className="h-32 w-30" />
                 <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-sm">{item.song}</p>
+                    <p className="text-sm">{item.title}</p>
+
                     <p className="text-xs">{item.artist}</p>
                   </div>
-                  <MdFavoriteBorder className="h-6 w-8" />
+                  <button
+                    onClick={() => addToFavourites(item._id)}
+                    className="cursor-pointer"
+                  >
+                    <MdFavoriteBorder className="h-6 w-8" />
+                  </button>
                 </div>
               </div>
             ))
