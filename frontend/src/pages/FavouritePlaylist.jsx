@@ -2,38 +2,46 @@ import React, { useEffect, useRef, useState } from "react";
 import { assets, songs } from "../assets/assets";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { HiDotsVertical } from "react-icons/hi";
-
-const userId = "6701c84fd3e7a4d5a5eabc12";
+import { AppContext } from "../context/AppContext";
+import { useContext } from "react";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const FavouritePlaylist = () => {
+  const { backendurl, token } = useContext(AppContext);
   const [favourites, setFavourites] = useState([]);
 
-  // Fetch favourites
-  useEffect(() => {
-    fetch(`http://localhost:5000/api/favourites/${userId}`)
-      .then((res) => res.json())
-      .then((data) => setFavourites(data))
-      .catch((err) => console.error(err));
-  }, []);
+  const [openMenu, setOpenMenu] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const menuRef = useRef(null);
 
-  const handleDelete = async (id) => {
+  // Fetch favourites from backend
+  const fetchFavourites = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/favourites/${id}`, {
-        method: "DELETE",
-      });
-
-      if (res.ok) {
-        setFavourites((prev) => prev.filter((fav) => fav._id !== id));
-      } else {
-        alert("Failed to delete favourite.");
+      setLoading(true);
+      const { data } = await axios.get(
+        backendurl + "/api/user/get-favourites",
+        {
+          headers: { token },
+        }
+      );
+      if (data) {
+        setFavourites(data);
+        console.log("All favourite data", data);
       }
     } catch (error) {
       console.error(error);
+      toast.error("Failed to load favourites");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const [openMenu, setOpenMenu] = useState(null);
-  const menuRef = useRef(null);
+  useEffect(() => {
+    if (token) {
+      fetchFavourites();
+    }
+  }, [token]);
 
   // CLose dropdown on outside click
   useEffect(() => {
@@ -91,6 +99,7 @@ const FavouritePlaylist = () => {
           </thead>
 
           <tbody>
+            {console.log("Favourites display", favourites)}
             {favourites.map((fav, index) => (
               <tr
                 key={fav._id}
@@ -100,36 +109,32 @@ const FavouritePlaylist = () => {
                 {/* Title(image + name) */}
                 <td className="px-4 py-2 flex items-center gap-3">
                   {" "}
-                  <img
+                  {/* <img
                     src={song.image}
                     alt="song-image"
                     className="w-10 h-10 rounded-md object-cover"
-                  />
+                  /> */}
                   <div className="flex flex-col">
-                    <span className="text-white">{song.name}</span>
+                    <span className="text-white">{fav.title}</span>
                     {/* show artist below title only on mobile */}
                     <span className="text-xs text-gray-400 sm:hidden">
-                      {song.artist}
+                      {fav.artist}
                     </span>
                     <span className="text-sm font-light opacity-75 sm:hidden">
-                      {song.duration}
+                      duration
                     </span>
                   </div>
                 </td>
 
                 {/* Artist - hidden on mobile because already displayed */}
-                <td className="px-4 py-2 hidden sm:table-cell">
-                  {song.artist}
-                </td>
+                <td className="px-4 py-2 hidden sm:table-cell">{fav.artist}</td>
 
                 {/* Album, Mood, AddedOn -- hidden on mobile */}
-                <td className="px-4 py-2 hidden sm:table-cell">{song.album}</td>
+                <td className="px-4 py-2 hidden sm:table-cell">album</td>
+                <td className="px-4 py-2 hidden sm:table-cell">duration</td>
+                <td className="px-4 py-2 hidden sm:table-cell">{fav.mood}</td>
                 <td className="px-4 py-2 hidden sm:table-cell">
-                  {song.duration}
-                </td>
-                <td className="px-4 py-2 hidden sm:table-cell">{song.mood}</td>
-                <td className="px-4 py-2 hidden sm:table-cell">
-                  {song.addedOn}
+                  {fav.addedAt}
                 </td>
 
                 {/* Last Column: Delete or 3-dot Menu */}
@@ -143,7 +148,7 @@ const FavouritePlaylist = () => {
                   <div className="relative sm:hidden" ref={menuRef}>
                     <button
                       onClick={() =>
-                        setOpenMenu(openMenu === song.id ? null : song.id)
+                        setOpenMenu(openMenu === fav._id ? null : fav._id)
                       }
                       className="p-2 rounded-full hover:bg-slate-600"
                     >
@@ -151,20 +156,20 @@ const FavouritePlaylist = () => {
                     </button>
 
                     {/* Dropdown Menu */}
-                    {openMenu === song.id && (
+                    {openMenu === fav._id && (
                       <div className="absolute right-0 mt-2 bg-slate-800 rounded-lg shadow-lg p-3 text-sm w-40 z-10 text-left">
                         <p className="text-gray-300 mb-1">
-                          <span className="font-bold">Album:</span> {song.album}
+                          <span className="font-bold">Album:</span> album
                         </p>
                         <p className="text-gray-300 mb-1">
-                          <span className="font-bold">Mood:</span> {song.mood}
+                          <span className="font-bold">Mood:</span> {fav.mood}
                         </p>
                         <p className="text-gray-300 mb-2">
                           <span className="font-bold">Added:</span>{" "}
-                          {song.addedOn}
+                          {fav.addedAt}
                         </p>
                         <button
-                          onClick={() => console.log("delete", song.name)}
+                          onClick={() => console.log("delete", fav.title)}
                           className="flex items-center gap-2 text-red-400 hover:text-red-500"
                         >
                           <RiDeleteBin6Line /> Delete
