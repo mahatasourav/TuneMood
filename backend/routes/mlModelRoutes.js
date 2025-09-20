@@ -1,5 +1,6 @@
 import express from "express";
 import axios from "axios";
+import  { Song } from "../models/songModel.js";
 
 const mlModelRouter = express.Router();
 
@@ -44,7 +45,39 @@ mlModelRouter.post("/predict", async (req, res) => {
       `${ML_API_URL}?song=${encodeURIComponent(seedSong)}`
     );
 
-    res.json(response.data);
+    console.log("ML API RAW RESPONSE:", response.data);
+
+    const recommendedSongs = response.data.recommendations; 
+
+    const songsWithId = [];
+    for (const s of recommendedSongs) {
+      let song = await Song.findOne({ title: s.title, artist: s.artist });
+
+      if (!song) {
+        song = await Song.create({
+          title: s.song,
+          artist: s.artist,
+          album: s.album || null,
+          mood: mood, // we already know the mood
+          duration: s.duration || null,
+          image: s.image || null,
+          date: new Date(),
+        });
+      }
+
+      songsWithId.push({
+        _id: song._id, // ✅ this is our songId
+        title: song.title,
+        artist: song.artist,
+        album: song.album,
+        mood: song.mood,
+        duration: song.duration,
+        image: song.image,
+        date: song.date,
+      });
+    }
+
+    res.json(songsWithId); 
   } catch (err) {
     console.error("ML API Error:", err.message);
     res.status(500).json({ error: "ML service unavailable" });
