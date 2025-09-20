@@ -28,9 +28,7 @@ const moodSeeds = {
 };
 
 // Use environment variable or fallback hosted Flask API
-const ML_API_URL =
-  process.env.ML_API_URL ||
-  "https://music-recommendar-system.onrender.com/recommend";
+const ML_API_URL = "https://music-recommendar-system.onrender.com/recommend";
 
 // POST /api/ml/predict → Get ML prediction
 mlModelRouter.post("/predict", async (req, res) => {
