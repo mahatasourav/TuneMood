@@ -9,6 +9,28 @@ import generalMusic from "../assets/generalMusic.png";
 
 const Playlist = () => {
   const [mood, setMood] = useState("");
+  const [sessionMoodCounts, setSessionMoodCounts] = useState({
+    happy: 0,
+    sad: 0,
+    relaxed: 0,
+    excited: 0,
+    romantic: 0,
+    energetic: 0,
+    chill: 0,
+    thoughtful: 0,
+    sleepy: 0,
+    party: 0,
+    motivated: 0,
+    moody: 0,
+    peaceful: 0,
+    emotional: 0,
+    meditative: 0,
+    workout: 0,
+    positive: 0,
+    angry: 0,
+    dreamy: 0,
+    adventurous: 0,
+  });
 
   const [songs, setSongs] = useState([]); // to store recommended songs
   const {
@@ -20,6 +42,14 @@ const Playlist = () => {
     addToFavourites,
   } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
+
+  const handleSongClick = (mood) => {
+    console.log("added to mood", mood);
+    setSessionMoodCounts((prev) => ({
+      ...prev,
+      [mood]: prev[mood] + 1,
+    }));
+  };
 
   const handleMoodClick = async (item) => {
     setMood({ mood: item.mood, emoji: item.emoji });
@@ -40,6 +70,28 @@ const Playlist = () => {
       setLoading(false); // <- here, in the finally block
     }
   };
+
+  // written by chatgpt for refresh on every refresh we are sending useState mood data to backend
+
+  useEffect(() => {
+    const handleUnload = () => {
+      console.log("Page is refreshing or closing - sending mood counts!");
+
+      const payload = new Blob([JSON.stringify(sessionMoodCounts)], {
+        type: "application/json",
+      });
+
+      const sent = navigator.sendBeacon(
+        `${backendurl}/api/user/mood-counts?token=${token}`,
+        payload
+      );
+
+      console.log("sendBeacon result:", sent); // true if browser accepted it
+    };
+
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload);
+  }, [sessionMoodCounts, backendurl, token]);
 
   useEffect(() => {
     const defaultMood = MoodSelectData[0]; // pick the first mood from your MoodSelectData array
@@ -83,6 +135,7 @@ const Playlist = () => {
             songs.map((item, index) => (
               <div
                 key={index}
+                onClick={() => handleSongClick(mood.mood)}
                 className="flex flex-col justify-between gap-0.5 cursor-pointer rounded-2xl hover:bg-slate-700 pb-4 px-2 pt-1.5 w-full h-[200px] duration-300 transition-all border border-gray-800"
               >
                 <img src={generalMusic} alt="" className="h-32 w-30" />

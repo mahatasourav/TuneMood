@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import userModel from "../models/userModel.js";
 import connectCloudinary from "../config/cloudinary.js";
 import { v2 as cloudinary } from "cloudinary";
+import { Song } from "../models/songModel.js";
 
 //Api to user Register
 
@@ -83,6 +84,7 @@ const getUserProfileData = async (req, res) => {
   try {
     const { userId } = req;
     const userData = await userModel.findById(userId).select("-password");
+
     return res.json({ success: true, userData });
   } catch (error) {
     console.log("error is ", error);

@@ -1,6 +1,6 @@
 import express from "express";
 import axios from "axios";
-import  { Song } from "../models/songModel.js";
+import { Song } from "../models/songModel.js";
 
 const mlModelRouter = express.Router();
 
@@ -49,7 +49,7 @@ mlModelRouter.post("/predict", async (req, res) => {
 
     console.log("ML API RAW RESPONSE:", response.data);
 
-    const recommendedSongs = response.data.recommendations; 
+    const recommendedSongs = response.data.recommendations;
 
     const songsWithId = [];
     for (const s of recommendedSongs) {
@@ -79,7 +79,7 @@ mlModelRouter.post("/predict", async (req, res) => {
       });
     }
 
-    res.json(songsWithId); 
+    res.json(songsWithId);
   } catch (err) {
     console.error("ML API Error:", err.message);
     res.status(500).json({ error: "ML service unavailable" });

@@ -15,6 +15,7 @@ const authUser = async (req, res, next) => {
     console.log("req body in authUser is ", req.body);
 
     req.userId = token_decode.id;
+
     console.log("req userId is ", req.userId);
     next();
   } catch (error) {

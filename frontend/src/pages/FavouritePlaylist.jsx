@@ -6,6 +6,7 @@ import { AppContext } from "../context/AppContext";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { format } from "date-fns";
 
 const FavouritePlaylist = () => {
   const { backendurl, token } = useContext(AppContext);
@@ -21,8 +22,9 @@ const FavouritePlaylist = () => {
       setLoading(true);
       const { data } = await axios.get(
         backendurl + "/api/user/get-favourites",
+
         {
-          headers: { token },
+          headers: { token: token },
         }
       );
       if (data) {
@@ -36,7 +38,28 @@ const FavouritePlaylist = () => {
       setLoading(false);
     }
   };
-
+  const deleteFavourite = async (songId) => {
+    try {
+      console.log("token", token);
+      const { data } = await axios.delete(
+        backendurl + "/api/user/delete-favourite",
+        {
+          headers: { token: token }, // headers ekhane
+          data: { songId }, // body ekhane dite hobe
+        }
+      );
+      if (data) {
+        toast(data.message);
+        console.log("deleted favourite is", data.favourite);
+        fetchFavourites();
+      } else {
+        toast(data.error);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to load favourites");
+    }
+  };
   useEffect(() => {
     if (token) {
       fetchFavourites();
@@ -67,7 +90,9 @@ const FavouritePlaylist = () => {
           <p className="text-lg font-light opacity-90">
             From calm to crazy - your favourites have it all
           </p>
-          <h3 className="text-md font-medium">Liked Songs: 8</h3>
+          <h3 className="text-md font-medium">
+            Liked Songs: {favourites.length}
+          </h3>
           <button className="bg-purple-500 w-fit px-4 py-2 rounded-full hover:bg-purple-600 transition-all mx-auto sm:mx-0">
             Play Songs
           </button>
@@ -134,13 +159,13 @@ const FavouritePlaylist = () => {
                 <td className="px-4 py-2 hidden sm:table-cell">duration</td>
                 <td className="px-4 py-2 hidden sm:table-cell">{fav.mood}</td>
                 <td className="px-4 py-2 hidden sm:table-cell">
-                  {fav.addedAt}
+                  {format(new Date(fav.addedAt), "dd MMM yyyy")}
                 </td>
 
                 {/* Last Column: Delete or 3-dot Menu */}
                 <td className="px-4 py-2 text-right">
                   {/* Desktop Delete Button */}
-                  <button onClick={() => handleDelete(fav._id)}>
+                  <button onClick={() => deleteFavourite(fav.songId)}>
                     <RiDeleteBin6Line className="hidden sm:inline-block hover:text-red-500" />
                   </button>
 
@@ -169,7 +194,7 @@ const FavouritePlaylist = () => {
                           {fav.addedAt}
                         </p>
                         <button
-                          onClick={() => console.log("delete", fav.title)}
+                          onClick={() => deleteFavourite(fav.songId)}
                           className="flex items-center gap-2 text-red-400 hover:text-red-500"
                         >
                           <RiDeleteBin6Line /> Delete
