@@ -1,6 +1,6 @@
 import express from "express";
 import axios from "axios";
-import  { Song } from "../models/songModel.js";
+import { Song } from "../models/songModel.js";
 
 const mlModelRouter = express.Router();
 
@@ -29,7 +29,9 @@ const moodSeeds = {
 };
 
 // Use environment variable or fallback hosted Flask API
-const ML_API_URL = "https://music-recommendar-system.onrender.com/recommend";
+const ML_API_URL =
+  process.env.ML_API_URL ||
+  "https://music-recommendar-system.onrender.com/recommend";
 
 // POST /api/ml/predict → Get ML prediction
 mlModelRouter.post("/predict", async (req, res) => {
@@ -47,7 +49,7 @@ mlModelRouter.post("/predict", async (req, res) => {
 
     console.log("ML API RAW RESPONSE:", response.data);
 
-    const recommendedSongs = response.data.recommendations; 
+    const recommendedSongs = response.data.recommendations;
 
     const songsWithId = [];
     for (const s of recommendedSongs) {
@@ -77,7 +79,7 @@ mlModelRouter.post("/predict", async (req, res) => {
       });
     }
 
-    res.json(songsWithId); 
+    res.json(songsWithId);
   } catch (err) {
     console.error("ML API Error:", err.message);
     res.status(500).json({ error: "ML service unavailable" });

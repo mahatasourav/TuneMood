@@ -1,7 +1,6 @@
 import { Favourite } from "../models/favouriteModel.js";
 import { Song } from "../models/songModel.js";
 
-
 // Add song to favourites
 export const addFavourite = async (req, res) => {
   try {
@@ -58,10 +57,19 @@ export const getFavourites = async (req, res) => {
 };
 
 // Delete favourite song
+// Delete favourite song
 export const deleteFavourite = async (req, res) => {
   try {
-    const { id } = req.params;
-    const favourite = await Favourite.findByIdAndDelete(id);
+    const { songId } = req.body;
+    console.log("songId", songId);
+    const { userId } = req; // assuming middleware adds userId
+
+    if (!songId) {
+      return res.status(400).json({ message: "songId is required" });
+    }
+
+    // Delete based on both userId + songId
+    const favourite = await Favourite.findOneAndDelete({ userId, songId });
 
     if (!favourite) {
       return res.status(404).json({ message: "Favourite not found" });
@@ -71,5 +79,40 @@ export const deleteFavourite = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+export const moodCounts = async (req, res) => {
+  try {
+    // 1️⃣ Get token from query params
+    const token = req.query.token;
+    if (!token) return res.status(401).json({ error: "No token provided" });
+    console.log("hey working token ", token);
+    console.log("on mood countssssssssss");
+    // 2️⃣ Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+
+    // 3️⃣ Parse JSON body sent by sendBeacon
+    let moodCounts = req.body;
+    // If using raw body parser, you may need to parse manually:
+    if (typeof moodCounts === "string") {
+      moodCounts = JSON.parse(moodCounts);
+    }
+
+    // 4️⃣ Update mood counts in user document
+    await User.findByIdAndUpdate(userId, {
+      $inc: Object.fromEntries(
+        Object.entries(moodCounts).map(([mood, count]) => [
+          `moodCounts.${mood}`,
+          count,
+        ])
+      ),
+    });
+
+    res.status(200).json({ message: "Mood counts updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to update mood counts" });
   }
 };

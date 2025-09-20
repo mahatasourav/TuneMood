@@ -7,7 +7,12 @@ import {
 } from "../controllers/userController.js"; // adjust path as needed
 import authUser from "../middlewares/authUser.js";
 import upload from "../middlewares/multer.js";
-import { addFavourite, getFavourites } from "../controllers/favouriteController.js";
+import {
+  addFavourite,
+  deleteFavourite,
+  getFavourites,
+  moodCounts,
+} from "../controllers/favouriteController.js";
 
 const userRouter = express.Router();
 
@@ -36,6 +41,9 @@ userRouter.patch(
 userRouter.post("/add-favourites", authUser, addFavourite);
 
 userRouter.get("/get-favourites", authUser, getFavourites);
+userRouter.delete("/delete-favourite", authUser, deleteFavourite);
+
+userRouter.post("/mood-counts", moodCounts);
 
 // // Remove from favourites
 // userRouter.delete("/:id/favourites/remove/:playlistId", removeFromFavourites);
