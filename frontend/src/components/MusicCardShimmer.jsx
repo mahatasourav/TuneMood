@@ -1,6 +1,6 @@
 import React from "react";
 import "../Style/Shimmer.css";
-
+/* this is Shimmer UI made by me and chatgpt */
 const MusicCardShimmer = () => {
   return (
     <div className="flex flex-col justify-between gap-2 rounded-lg p-3 w-full h-[200px] border border-gray-800 bg-[#1b1f21] hover:bg-gray-900/80 transition-all duration-300">
