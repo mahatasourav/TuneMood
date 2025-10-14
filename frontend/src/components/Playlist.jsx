@@ -6,6 +6,7 @@ import axios from "axios";
 import { AppContext } from "../context/AppContext";
 import { data } from "react-router-dom";
 import generalMusic from "../assets/generalMusic.png";
+import MusicCardShimmer from "./MusicCardShimmer";
 
 const Playlist = () => {
   const [mood, setMood] = useState("");
@@ -128,9 +129,9 @@ const Playlist = () => {
         </p>
         <div className="grid grid-rows-2 auto-cols-[150px] grid-flow-col gap-y-8 gap-x-6 w-full overflow-x-auto scrollbar-hide">
           {loading ? (
-            <p className="text-center col-span-full text-gray-500">
-              Loading songs...
-            </p>
+            Array(20)
+              .fill(0)
+              .map((_, idx) => <MusicCardShimmer key={idx} />)
           ) : songs.length > 0 ? (
             songs.map((item, index) => (
               <div
