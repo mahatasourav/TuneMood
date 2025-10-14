@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config(); // load .env first
 mongoose.set("strictQuery", true);
+
+console.log("Mongo URI:", process.env.MONGODB_URI); // ✅ DEBUG: check the value
 
 const connectDB = async () => {
   try {
