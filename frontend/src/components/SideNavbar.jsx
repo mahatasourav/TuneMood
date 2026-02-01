@@ -118,7 +118,7 @@ const SideNavbar = () => {
                 {/* User-Profile */}
                 {!token ? (
                   <NavLink
-                    to={"/login"}
+                    to={"/auth"}
                     className="flex gap-2 hover:text-yellow-300"
                     onClick={() => setViewList(false)}
                   >
